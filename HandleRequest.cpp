@@ -33,53 +33,54 @@ bool generateQuest(int correctTimes,unsigned int questNum) {
     } else {
         handledString = rawString;
     }
-     * Õâ¸öËã·¨ËÆºõÓĞÎÊÌâ
+     * è¿™ä¸ªç®—æ³•ä¼¼ä¹æœ‰é—®é¢˜
      */
-    //ÉÏÊö¼ì²é¶¼ÊÇÎªÁË¼õÉÙËæ»úÉú³ÉµÄÖØ¸´À¨ºÅ£¬sign²ÎÊıÎª1Ê±£¬º¯ÊıÔÚµ±Ç°Éî¶È½øĞĞµİ¹éÊ±¾Í²»½øĞĞÏò±í´ïÊ½Ëæ»ú¼ÓÈëÀ¨ºÅµÄ²Ù×÷
+    //ä¸Šè¿°æ£€æŸ¥éƒ½æ˜¯ä¸ºäº†å‡å°‘éšæœºç”Ÿæˆçš„é‡å¤æ‹¬å·ï¼Œsignå‚æ•°ä¸º1æ—¶ï¼Œå‡½æ•°åœ¨å½“å‰æ·±åº¦è¿›è¡Œé€’å½’æ—¶å°±ä¸è¿›è¡Œå‘è¡¨è¾¾å¼éšæœºåŠ å…¥æ‹¬å·çš„æ“ä½œ
     //handledString = rawString;
-    cout << "Çë¼ÆËã:" + rawString << endl;
+    cout << "è¯·è®¡ç®—:" + rawString << endl;
 #ifndef NDEBUG
-    cout << "Éú³ÉµÄRPN:" + convertToRPN(handledString) << endl;
+    cout << "ç”Ÿæˆçš„RPN:" + convertToRPN(handledString) << endl;
 #endif
     int retryTime = 1;
+    double calculatedResult = calculateResult(convertToRPN(rawString));
     retry:
     string inputResult;
     cin >> inputResult;
 
     try {
-        double doubleResult = stod(inputResult);//Èç¹û²»Îª¸¡µã¾Í²¶»ñÒì³£×ªÎªÕûĞÍ
-        if (checkResult<double>(doubleResult, calculateResult(convertToRPN(rawString)))) {
-            cout << "½á¹ûÕıÈ·" << endl;
+        double doubleResult = stod(inputResult);//å¦‚æœä¸ä¸ºæµ®ç‚¹å°±æ•è·å¼‚å¸¸è½¬ä¸ºæ•´å‹
+        if (checkResult<double>(doubleResult, calculatedResult)) {
+            cout << "ç»“æœæ­£ç¡®" << endl;
             return true;
         } else if (retryTime != 0) {
-            cout << "½á¹û´íÎó£¬ÔÙÊÔÒ»´Î°É" << endl;
+            cout << "ç»“æœé”™è¯¯ï¼Œå†è¯•ä¸€æ¬¡å§" << endl;
             retryTime = 0;
             goto retry;
         } else {
-            cout << "½á¹û´íÎó" << endl;
+            cout << "ç»“æœé”™è¯¯" << endl;
             return false;
         }
     } catch (const invalid_argument &) {
         try {
             int intResult = stoi(inputResult);
-            if (checkResult<int>(intResult, calculateResult(convertToRPN(rawString)))) {
-                cout << "½á¹ûÕıÈ·" << endl;
+            if (checkResult<int>(intResult, calculatedResult)) {
+                cout << "ç»“æœæ­£ç¡®" << endl;
                 return true;
             } else if (retryTime != 0) {
-                cout << "½á¹û´íÎó£¬ÔÙÊÔÒ»´Î°É" << endl;
+                cout << "ç»“æœé”™è¯¯ï¼Œå†è¯•ä¸€æ¬¡å§" << endl;
                 retryTime = 0;
                 goto retry;
             }else {
-                cout << "½á¹û´íÎó" << endl;
+                cout << "ç»“æœé”™è¯¯" << endl;
                 return false;
             }
         } catch (const invalid_argument &) {
             if(inputResult == "wq"){
-                cout << "±£´æ²¢ÍË³öÖĞ...";
+                cout << "ä¿å­˜å¹¶é€€å‡ºä¸­...";
                 saveScore(correctTimes,questNum);
                 exit(0);
             }else{
-                cout << "ÊäÈëÄÚÈİ´íÎó£¬Ö»ÄÜÊäÈëÊı×ÖºÍwqÖ¸ÁîÅ¶" << endl;
+                cout << "è¾“å…¥å†…å®¹é”™è¯¯ï¼Œåªèƒ½è¾“å…¥æ•°å­—å’ŒwqæŒ‡ä»¤å“¦" << endl;
                 goto retry;
             }
         }
@@ -92,7 +93,7 @@ void handleQuery(int input){
     int highest = findHighest();
     switch(input){
         case 1:
-            cout << "ÊäÈëÏëÒªµÄÌâÄ¿ÊıÁ¿:";
+            cout << "è¾“å…¥æƒ³è¦çš„é¢˜ç›®æ•°é‡:";
             cin >> questNum;
             for(unsigned int i = questNum; i > 0; i --){
                 if(generateQuest(correctTimes,questNum)){
@@ -102,18 +103,18 @@ void handleQuery(int input){
             saveScore(correctTimes,questNum);
 
             if(highest >= correctTimes){
-                cout << "ÄãÉÏ´Î×î¶à×ö³öÁË:"  << highest << "µÀÌâ£¡" << endl;
-                cout << "×öµÄ±ÈÉÏ´Î»¹¶à£¬Õæ²»´í£¬ÔÙ½ÓÔÙÀ÷!" << endl;
+                cout << "ä½ ä¸Šæ¬¡æœ€å¤šåšå‡ºäº†:"  << highest << "é“é¢˜ï¼" << endl;
+                cout << "åšçš„æ¯”ä¸Šæ¬¡è¿˜å¤šï¼ŒçœŸä¸é”™ï¼Œå†æ¥å†å‰!" << endl;
             }else if(highest == -1){
                 break;
             }else{
-                cout << "ÄãÉÏ´Î×î¶à×ö³öÁË:"  << highest << "µÀÌâ£¡" << endl;
-                cout << "×öµÄÃ»ÓĞÉÏ´Î¶à£¬µ«Ò²Ã»¹ØÏµ£¬ÏÂ´Î¼ÓÓÍ!" << endl;
+                cout << "ä½ ä¸Šæ¬¡æœ€å¤šåšå‡ºäº†:"  << highest << "é“é¢˜ï¼" << endl;
+                cout << "åšçš„æ²¡æœ‰ä¸Šæ¬¡å¤šï¼Œä½†ä¹Ÿæ²¡å…³ç³»ï¼Œä¸‹æ¬¡åŠ æ²¹!" << endl;
             }
             break;
         case 2:
             questNum = randomQuest(engine);
-            cout << "Ëæ»úÉú³ÉÁË:" << questNum << "µÀÌâÄ¿" << endl;
+            cout << "éšæœºç”Ÿæˆäº†:" << questNum << "é“é¢˜ç›®" << endl;
             for(unsigned int i = questNum; i > 0; i --) {
                 if(generateQuest(correctTimes,questNum)){
                     correctTimes ++;
@@ -122,21 +123,21 @@ void handleQuery(int input){
             saveScore(correctTimes,questNum);
 
             if(highest >= correctTimes){
-                cout << "ÄãÉÏ´Î×î¶à×ö³öÁË:"  << highest << "µÀÌâ£¡" << endl;
-                cout << "×öµÄ±ÈÉÏ´Î»¹¶à£¬Õæ²»´í£¬ÔÙ½ÓÔÙÀ÷!" << endl;
+                cout << "ä½ ä¸Šæ¬¡æœ€å¤šåšå‡ºäº†:"  << highest << "é“é¢˜ï¼" << endl;
+                cout << "åšçš„æ¯”ä¸Šæ¬¡è¿˜å¤šï¼ŒçœŸä¸é”™ï¼Œå†æ¥å†å‰!" << endl;
             }else if(highest == -1){
                 break;
             }else{
-                cout << "ÄãÉÏ´Î×î¶à×ö³öÁË:"  << highest << "µÀÌâ£¡" << endl;
-                cout << "×öµÄÃ»ÓĞÉÏ´Î¶à£¬µ«Ò²Ã»¹ØÏµ£¬ÏÂ´Î¼ÓÓÍ!" << endl;
+                cout << "ä½ ä¸Šæ¬¡æœ€å¤šåšå‡ºäº†:"  << highest << "é“é¢˜ï¼" << endl;
+                cout << "åšçš„æ²¡æœ‰ä¸Šæ¬¡å¤šï¼Œä½†ä¹Ÿæ²¡å…³ç³»ï¼Œä¸‹æ¬¡åŠ æ²¹!" << endl;
             }
 
             break;
         case 3:
             if(highest==-1){
-                cout<< "Äã»¹Ã»Ğ´ÄØ£¬ÏÈÈ¥Ğ´¼¸µÀÌâ´æ¸ö¼ÇÂ¼°É£¡"<<endl;
+                cout<< "ä½ è¿˜æ²¡å†™å‘¢ï¼Œå…ˆå»å†™å‡ é“é¢˜å­˜ä¸ªè®°å½•å§ï¼"<<endl;
             }else {
-                cout << "ÄãµÄ×îºÃ³É¼¨Ò»¹²×ö³öÁË:" << highest << "µÀÌâ£¡" << endl;
+                cout << "ä½ çš„æœ€å¥½æˆç»©ä¸€å…±åšå‡ºäº†:" << highest << "é“é¢˜ï¼" << endl;
             }
             break;
         case 4:
@@ -144,7 +145,7 @@ void handleQuery(int input){
             break;
         default:
         case 9:
-            cout << "ÍË³ö";
+            cout << "é€€å‡º";
             break;
     }
 }
