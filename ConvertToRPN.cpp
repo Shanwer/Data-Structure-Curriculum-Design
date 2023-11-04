@@ -30,7 +30,7 @@ string convertToRPN(string expression) {
     char topChar; //存放栈顶字符的临时变量
 
     for (char ch : expression) {
-        if (isdigit(ch)) { // 如果是数字则直接输出
+        if (isdigit(ch)) { // 如果是数字则直接拼接到rpn字符串
             rpn += ch;
             continue;
         } else if (isOperator(ch)) { // 如果遍历表达式的字符是运算符
