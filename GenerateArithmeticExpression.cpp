@@ -30,7 +30,7 @@ string generateRandomExpression(int depth, int sign) {
         return to_string(randomNum(engine));
     } else {
         string expression;
-        int numParentheses = generateRandomNumber(0, 1); // 随机生成括号
+        int generateParentheses = generateRandomNumber(0, 1); // 随机生成括号
         char op = generateRandomOperator(); // 随机生成运算符
 
         // 递归生成左右两个子表达式
@@ -38,10 +38,10 @@ string generateRandomExpression(int depth, int sign) {
         string right = generateRandomExpression(depth - 1, 0);
 
         if (sign == 1){
-            numParentheses = 0;
+            generateParentheses = 0;
         }
 
-        if (numParentheses > 0) {
+        if (generateParentheses > 0) {
             expression += "(";
         }
 
@@ -51,7 +51,7 @@ string generateRandomExpression(int depth, int sign) {
         expression += " ";
         expression += right;
 
-        if (numParentheses > 0) {
+        if (generateParentheses > 0) {
             expression += ")";
         }
 

@@ -17,7 +17,8 @@ uniform_int_distribution<unsigned> expressionDepth(1,3);
 uniform_int_distribution<unsigned> randomQuest(1,20);
 
 bool generateQuest(int correctTimes,unsigned int questNum) {
-    string rawString, handledString;
+    string rawString;
+    //handledString;
 
     unsigned int randomDepth = expressionDepth(engine);
     if (randomDepth == 1 || randomDepth == 3) {
@@ -35,8 +36,8 @@ bool generateQuest(int correctTimes,unsigned int questNum) {
      * 这个算法似乎有问题
      */
     //上述检查都是为了减少随机生成的重复括号，sign参数为1时，函数在当前深度进行递归时就不进行向表达式随机加入括号的操作
-    handledString = rawString;
-    cout << "请计算:" + handledString << endl;
+    //handledString = rawString;
+    cout << "请计算:" + rawString << endl;
 #ifndef NDEBUG
     cout << "生成的RPN:" + convertToRPN(handledString) << endl;
 #endif
@@ -47,7 +48,7 @@ bool generateQuest(int correctTimes,unsigned int questNum) {
 
     try {
         double doubleResult = stod(inputResult);//如果不为浮点就捕获异常转为整型
-        if (checkResult<double>(doubleResult, calculateResult(convertToRPN(handledString)))) {
+        if (checkResult<double>(doubleResult, calculateResult(convertToRPN(rawString)))) {
             cout << "结果正确" << endl;
             return true;
         } else if (retryTime != 0) {
@@ -61,7 +62,7 @@ bool generateQuest(int correctTimes,unsigned int questNum) {
     } catch (const invalid_argument &) {
         try {
             int intResult = stoi(inputResult);
-            if (checkResult<int>(intResult, calculateResult(convertToRPN(handledString)))) {
+            if (checkResult<int>(intResult, calculateResult(convertToRPN(rawString)))) {
                 cout << "结果正确" << endl;
                 return true;
             } else if (retryTime != 0) {
