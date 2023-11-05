@@ -102,7 +102,7 @@ void handleQuery(int input){
             }
             saveScore(correctTimes,questNum);
 
-            if(highest >= correctTimes){
+            if(highest <= correctTimes){
                 cout << "你上次最多做出了:"  << highest << "道题！" << endl;
                 cout << "做的比上次还多，真不错，再接再厉!" << endl;
             }else if(highest == -1){
@@ -122,7 +122,7 @@ void handleQuery(int input){
             }
             saveScore(correctTimes,questNum);
 
-            if(highest >= correctTimes){
+            if(highest <= correctTimes){
                 cout << "你上次最多做出了:"  << highest << "道题！" << endl;
                 cout << "做的比上次还多，真不错，再接再厉!" << endl;
             }else if(highest == -1){
